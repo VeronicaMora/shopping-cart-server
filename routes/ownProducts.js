@@ -1,9 +1,7 @@
 const express = require('express')
 const router = express.Router()
-const { get, update } = require('../controllers/profile')
-
+const { get } = require('../controllers/ownProducts')
 
 router.get('/', get)
-router.patch('/:id', update)
 
 module.exports = router

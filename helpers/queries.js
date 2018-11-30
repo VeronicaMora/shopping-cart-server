@@ -46,6 +46,38 @@ module.exports.login = (username) => {
         })
     })
 }
+module.exports.updateProfile = (id_profile, image, info, id_user) => {
+    return new Promise((resolve, reject) => { 
+        db.connect().then((obj) => {
+            obj.none('UPDATE profile SET (image, info, id_user) = ($2, $3, $4) WHERE id_user = $1', [id_profile, image, info, id_user]).then((data) => {
+                resolve(data);
+                obj.done();                
+            }).catch((error) => {
+                console.log(error)
+                reject(error)
+                obj.done()    
+            })
+        }).catch((error) => {
+            console.log(error)
+            reject(error)
+        })
+    })
+}
+module.exports.getProfile = () => {
+    return new Promise((resolve, reject) => { 
+        db.connect().then((obj) => {
+            obj.any('SELECT * FROM profile').then((data) => {
+                resolve(data);
+                obj.done();                
+            }).catch((error) => {
+                reject(error)
+                obj.done()    
+            })
+        }).catch((error) => {
+            reject(error)
+        })
+    })
+}
 module.exports.deleteAccount = (id) => {
     return new Promise((resolve, reject) => { 
         db.connect().then((obj) => {
@@ -213,6 +245,36 @@ module.exports.removeCartProduct = (id) => {
             }).catch((error) => {
                 reject(error)
                 obj.done()    
+            })
+        }).catch((error) => {
+            reject(error)
+        })
+    })
+}
+module.exports.createComment = (comment_text, created_at, id_product, id_user) => {
+    return new Promise((resolve, reject) => { 
+        db.connect().then((obj) => {
+            obj.one('INSERT INTO comments (comment_text, created_at, id_product, id_user) VALUES ($1, $2, $3, $4)', [comment_text, created_at, id_product, id_user]).then((data) => {
+                resolve({comment_text: comment_text, created_at: created_at, id_product: id_product, id_user: id_user, id_comment: data.id_comment})
+                obj.done()
+            }).catch((error) => {
+                reject(error)
+                obj.done()    
+            })
+        }).catch((error) => {
+            reject(error)
+        })
+    })
+}
+module.exports.getComments = () => {
+    return new Promise((resolve, reject) => {
+        db.connect().then((obj) => {
+            obj.any('SELECT * FROM comments').then((data) => {
+                resolve(data)
+                obj.done()
+            }).catch((error) => {
+                reject(error)
+                ondblclick.done()
             })
         }).catch((error) => {
             reject(error)
