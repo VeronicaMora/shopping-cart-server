@@ -140,7 +140,7 @@ module.exports.deleteUserProduct = (id) => {
     })
 }
 
-module.exports.searchProduct = (param) => {
+/*module.exports.searchProduct = (param) => {
     return new Promise((resolve, reject) => { 
         db.connect().then((obj) => {
             obj.any('SELECT * FROM product WHERE des_product LIKE $1', `%${param}%`).then((data) => {
@@ -154,7 +154,7 @@ module.exports.searchProduct = (param) => {
             reject(error)
         })
     })
-}
+}*/
 module.exports.createProduct = (name, des, price, ava, image) => {
     return new Promise((resolve, reject) => { 
         db.connect().then((obj) => {

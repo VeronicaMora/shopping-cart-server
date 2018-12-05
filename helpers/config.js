@@ -1,5 +1,5 @@
 const config = {
-    dbUrl: 'postgres://postgres:mokaccino@localhost:5432/cart',
+    dbUrl: 'postgres://postgres:masterkey@localhost:5432/cart',
     port: 5000
 }
 
