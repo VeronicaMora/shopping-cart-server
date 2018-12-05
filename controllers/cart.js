@@ -2,13 +2,16 @@ const { addProduct, removeCartProduct, getProductsFromCart } = require('../helpe
 module.exports = {
     get: (req, res) => {
         getProductsFromCart(req.userId).then((data) => {
+            console.log(data)
             res.send(data)
         }).catch((error) => {
+            console.log(error)
             res.status(400).send(error)
         })
     },
     add: (req, res) => {
         addProduct(req.userId, parseInt(req.body.id_product)).then((data) => {
+            console.log(data)
             res.send({message: 'Se agrego el producto al carrito', id: data.id_user_products})
         }).catch((error) => {
             console.log(error)
@@ -17,6 +20,7 @@ module.exports = {
     },
     remove: (req, res) => {
         removeCartProduct(req.params.id).then(() => {
+            console.log(data)
             res.send({message: 'Se ha eliminado un producto'})
         }).catch((error) => {
             console.log(error)
