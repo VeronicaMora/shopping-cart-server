@@ -281,3 +281,33 @@ module.exports.getComments = () => {
         })
     })
 }
+module.exports.removeComment = (id) => {
+    return new Promise((resolve, reject) => { 
+        db.connect().then((obj) => {
+            obj.none('DELETE FROM comments WHERE id_comment = $1', [id]).then((data) => {
+                resolve();
+                obj.done();                
+            }).catch((error) => {
+                reject(error)
+                obj.done()    
+            })
+        }).catch((error) => {
+            reject(error)
+        })
+    })
+}
+module.exports.productComments = (id_comment, id_product, id_user) => {
+    return new Promise((resolve, reject) => { 
+        db.connect().then((obj) => {
+            obj.one('INSERT INTO product_comments (id_comment, id_product, id_user) VALUES ($1, $2, $3) returning id_user_products', [id_comment, id_product, id_user]).then((data) => {
+                resolve(data)
+                obj.done()
+            }).catch((error) => {
+                reject(error)
+                obj.done()    
+            })
+        }).catch((error) => {
+            reject(error)
+        })
+    })
+}
